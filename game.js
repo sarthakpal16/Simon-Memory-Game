@@ -7,29 +7,70 @@ var randomChosenColour;
 var gameStarted = false;
 var level = -1;
 
-$(document).keypress(function (event) {
-    console.log(event.key);
-    
-    setTimeout(function(){if (!gameStarted) {
+
+
+
+if (!gameStarted) {
+    $(document).keypress(function (event) {
+        console.log(event.key);
         gameStarted = true;
+        setTimeout(function(){   
+            nextSequence();
+        },500);
         
-        nextSequence();
-    
-    }},1000);
-    
-    
-    
-});
+    });
+}
 
 
 function nextSequence() {
+    userClickedPattern = [];
     level++;
     $("#level-title").text("Level "+level);
-    var randomNumber = Math.floor(Math.random() * 4);
-    randomChosenColour = buttonColours[randomNumber];
-    gamePattern.push(randomChosenColour);
-    buttonAnimation(randomChosenColour);
-    console.log(gamePattern);
+    setTimeout(function (){
+        var randomNumber = Math.floor(Math.random() * 4);
+        randomChosenColour = buttonColours[randomNumber];
+        gamePattern.push(randomChosenColour);
+        buttonAnimation(randomChosenColour);
+        console.log(gamePattern);
+    },500);
+    
+    
+}
+
+function checkAnswer(currentLevel) {
+    if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
+        console.log("success");
+        if (userClickedPattern.length === gamePattern.length) {
+            setTimeout(function (){
+                nextSequence();
+
+            },1000);
+        }
+    }
+
+    else {
+        console.log("wrong");
+        playSound("wrong");
+        $("body").addClass("game-over");
+        setTimeout(function (){
+            $("body").removeClass("game-over");
+
+        },200);
+        $('h1').text("Game Over, Press Any Key to Restart");
+        $(document).keypress(function (event) {  
+            setTimeout(restart,2000);
+              
+        });
+        
+    }
+
+}
+
+function restart() {
+    
+    level = -1;
+    gamePattern = []
+    gameStarted = false;
     
 }
 
@@ -57,6 +98,8 @@ $('.btn').on("click",function(event){
     playSound(userChosenColour);
     animatePress(userChosenColour);
     console.log(userClickedPattern);
+
+    checkAnswer(userClickedPattern.length-1);
 })
 
 function playSound(name) {
