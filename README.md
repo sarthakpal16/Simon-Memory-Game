@@ -1,3 +1,3 @@
 # Simon-Memory-Game
 
-Link: 
+Link: https://sarthakpal16.github.io/Simon-Memory-Game/
