@@ -57,10 +57,7 @@ function checkAnswer(currentLevel) {
 
         },200);
         $('h1').text("Game Over, Press Any Key to Restart");
-        $(document).keypress(function (event) {  
-            setTimeout(restart,2000);
-              
-        });
+        restart();
         
     }
 
@@ -68,10 +65,10 @@ function checkAnswer(currentLevel) {
 
 function restart() {
     
-    level = -1;
+    level = 0;
     gamePattern = []
     gameStarted = false;
-    userClickedPattern = [];
+    
     
 }
 
