@@ -71,6 +71,7 @@ function restart() {
     level = -1;
     gamePattern = []
     gameStarted = false;
+    userClickedPattern = [];
     
 }
 
